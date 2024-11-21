@@ -1,0 +1,12 @@
+[package]
+name = "obs-service-elixir_mix_deps"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.21", features = ["derive"] }
+thiserror = "2.0.3"
+anyhow = "1.0.93"
+flate2 = "1.0.35"
+tar = "0.4.43"
+zstd = "0.13.2"

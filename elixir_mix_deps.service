@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="elixir_mix_deps">
+    <summary>OBS Source Service to vendor all mix dependencies for an Elixir project</summary>
+    <description><![CDATA[This service extracts an Elixir application source,
+      searches for an Elixir application containing a mix.exs file,
+      downloads all the dependencies,
+      and creates a vendor.tar[.<tar compression>] to be committed allowing fully offline
+      builds of Elixir applications.]]>
+    </description>
+    <parameter name="subdir">
+      <description>Subdirectory where the Mix project is located</description>
+    </parameter>
+    <parameter name="archivename">
+      <description>Final name of the archive. Default: vendor.tar.gz</description>
+    </parameter>
+    <parameter name="compression">
+      <description>What compression algorithm to use. Default: gz</description>
+      <allowedvalues>zst</allowedvalues>
+      <allowedvalues>gz</allowedvalues>
+   </parameter>
+</service>
