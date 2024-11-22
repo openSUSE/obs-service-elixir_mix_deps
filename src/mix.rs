@@ -16,3 +16,23 @@ pub fn fetch_mix_deps(subdir: &str) -> Result<(), SourceServiceError> {
 
     Ok(())
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+
+    #[test]
+    fn fetch_mix_deps_successful() {
+        let result = fetch_mix_deps("test/test_project");
+        fs::remove_dir_all("test/test_project/deps").unwrap();
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn fetch_mix_deps_error() {
+        let result = fetch_mix_deps("test/carbonara");
+        assert!(result.is_err());
+    }
+}
