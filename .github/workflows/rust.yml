@@ -13,8 +13,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    container:
+      image: registry.opensuse.org/opensuse/bci/rust:latest
 
     steps:
+    - name: Install additional deps
+      run: zypper in -y elixir
     - uses: actions/checkout@v4
     - name: Build
       run: cargo build --verbose
