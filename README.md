@@ -7,7 +7,6 @@
 ## Features
 
 - **Automatic Dependency Resolution**: Automatically resolves and vendors dependencies specified in your Elixir projects.
-- **Integration with OBS**: Seamlessly integrates with the Open Build Service, allowing for easy deployment and management of Elixir applications.
 - **Customizable Configurations**: Supports customizable settings to fit various project needs.
 
 ## Installation
