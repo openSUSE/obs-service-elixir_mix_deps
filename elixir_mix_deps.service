@@ -17,5 +17,8 @@
       <description>What compression algorithm to use. Default: gz</description>
       <allowedvalues>zst</allowedvalues>
       <allowedvalues>gz</allowedvalues>
-   </parameter>
+    </parameter>
+    <parameter name="outdir">
+      <description>Right now from a purely operational point of view the outdir param is ignored.</description>
+    </parameter>
 </service>
