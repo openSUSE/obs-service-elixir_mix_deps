@@ -1,5 +1,6 @@
 # OBS Source Service `obs-service-elixir_mix_deps`
 [![Factory build result](https://build.opensuse.org/projects/openSUSE:Factory/packages/obs-service-elixir_mix_deps/badge.svg?type=default)](https://build.opensuse.org/package/show/openSUSE:Factory/obs-service-elixir_mix_deps)
+[![CI](https://github.com/openSUSE/obs-service-elixir_mix_deps/actions/workflows/rust.yml/badge.svg)](https://github.com/openSUSE/obs-service-elixir_mix_deps/actions/workflows/rust.yml)
 
 ## Overview
 
