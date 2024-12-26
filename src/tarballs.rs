@@ -32,14 +32,14 @@ mod tests {
 
     #[test]
     fn recompress_successful() {
-        let result = recompress("vendor.tar.gz", "test/test_compression", "gz");
+        let result = recompress("vendor.tar.gz", "tests/test_compression", "gz");
         fs::remove_file("vendor.tar.gz").unwrap();
         assert!(result.is_ok());
     }
 
     #[test]
     fn recompress_error() {
-        let result = recompress("vendor2.tar.gz", "test/carbonara", "gz");
+        let result = recompress("vendor2.tar.gz", "tests/carbonara", "gz");
         fs::remove_file("vendor2.tar.gz").unwrap();
         assert!(result.is_err());
     }
