@@ -8,7 +8,7 @@ clap = { version = "4.5.23", features = ["derive"] }
 thiserror = "2.0.9"
 anyhow = "1.0.95"
 flate2 = "1.0.35"
-tar = "0.4.43"
+tar = "0.4.44"
 zstd = "0.13.2"
 
 [dev-dependencies]
