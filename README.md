@@ -51,7 +51,7 @@ Just use the service inside the `_service` file as you would usually do with oth
 The service will produce an archive with a `deps` directory inside, that contains all the dependencies needed for the project, ready to be used as a `Source` in your `.spec` file. 
 
 
-```rpmspec
+```spec
 Name:           ex_doc
 Version:        0.38.1
 Release:        0
