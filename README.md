@@ -24,30 +24,77 @@ Just use the service inside the `_service` file as you would usually do with oth
 
 ```xml
 <services>
-    <service name="tar_scm" mode="manual">
-        <param name="url">https://github.com/trento-project/web.git</param>
-        <param name="scm">git</param>
-        <param name="revision">00976f451ee68e1cdb3c2a433a880d90a9891a6d</param>
-        <param name="exclude">.git</param>
-        <param name="exclude">.github</param>
-        <param name="exclude">assets/package-lock.json</param>
-        <param name="extract">assets/package-lock.json</param>
-        <param name="versionformat">2.4.0+git.dev4.1732176836.00976f451</param>
-        <param name="filename">trento-web</param>
-    </service>
-    <service name="set_version" mode="manual">
-        <param name="file">trento-web.spec</param>
-    </service>
-    <service name="recompress" mode="manual">
-        <param name="file">*.tar</param>
-        <param name="compression">gz</param>
-    </service>
-    <service name="elixir_mix_deps" mode="manual">
-        <param name="subdir">web</param>
-        <param name="archivename">vendor.tar.gz</param>
-        <param name="compression">gz</param>
-    </service>
+	<service name="tar_scm" mode="manual">
+		<param name="url">https://github.com/elixir-lang/ex_doc</param>
+		<param name="versionformat">@PARENT_TAG@</param>
+		<param name="revision">v0.38.1</param>
+		<param name="scm">git</param>
+		<param name="changesgenerate">enable</param>
+		<param name="versionrewrite-pattern">v(.+)</param>
+		<param name="versionrewrite-replacement">\1</param>
+	</service>
+	<service name="set_version" mode="manual">
+		<param name="basename">ex_doc</param>
+	</service>
+	<service name="recompress" mode="manual">
+		<param name="compression">xz</param>
+		<param name="file">*.tar</param>
+	</service>
+	<service name="elixir_mix_deps" mode="manual">
+		<param name="subdir">ex_doc</param>
+		<param name="archivename">vendor.tar.gz</param>
+		<param name="compression">gz</param>
+	</service>
 </services>
 ```
 
 The service will produce an archive with a `deps` directory inside, that contains all the dependencies needed for the project, ready to be used as a `Source` in your `.spec` file. 
+
+
+```rpmspec
+Name:           ex_doc
+Version:        0.38.1
+Release:        0
+Summary:        ExDoc produces HTML and online documentation for Elixir projects
+License:        Apache-2.0 AND MIT
+Group:          Development/Libraries/Other
+URL:            https://github.com/elixir-lang/ex_doc
+Source0:        %{name}-%{version}.tar.xz
+Source1:        vendor.tar.gz
+BuildRequires:  elixir >= 1.15
+BuildRequires:  elixir-hex
+Obsoletes:      elixir-ex_doc < %{version}
+Provides:       elixir-ex_doc = %{version}
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+# ex_doc package IS arch dependent
+# See https://github.com/elixir-lang/elixir/issues/2785 for details
+# BuildArch:      noarch
+
+%description
+ExDoc is a tool to generate documentation for your Elixir projects. In case you
+are looking for documentation for Elixir itself, check out Elixir's website.
+
+%prep
+%autosetup -a1 -v
+
+%build
+export LANG=en_US.UTF-8
+export MIX_ENV=prod
+export MIX_PATH=%{elixir_libdir}/hex/ebin
+%{__mix} escript.build
+
+%install
+sed -i -e '1s|/usr/bin/env escript|/usr/bin/escript|' ex_doc
+install -D -m 0755 ex_doc %{buildroot}%{_bindir}/ex_doc
+
+%files
+%defattr(-,root,root)
+%doc README.md CHANGELOG.md
+%license LICENSE
+%attr(0755,root,root) %{_bindir}/ex_doc
+
+%changelog
+```
+
+The only very important caveat is, you have to set `elixir-hex` as a `BuildRequires` dependency and you also have to set the `MIX_PATH` environment variable to reference the operating system's Hex.
+
