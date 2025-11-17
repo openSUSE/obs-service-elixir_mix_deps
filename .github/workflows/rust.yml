@@ -18,7 +18,9 @@ jobs:
 
     steps:
     - name: Install additional deps
-      run: zypper in -y elixir
+      run: |
+        zypper in -y -t pattern devel_basis
+        zypper in -y elixir
     - uses: actions/checkout@v5
     - name: Build
       run: cargo build --verbose
